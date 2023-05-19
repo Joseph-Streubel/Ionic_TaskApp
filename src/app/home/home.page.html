@@ -1,20 +1,45 @@
 <ion-header [translucent]="true">
+  <br>
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title style="text-align: center;">
+      My Task App
     </ion-title>
   </ion-toolbar>
+    <ion-button color="" shape="round" expand="full"(click)="openTaskDialog()">Add Task</ion-button>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <h1 style="text-align: center;">Open Tasks</h1>
+  <ion-list>
+    <ion-item-sliding *ngFor="let task of taskList">
+      <div *ngIf="task.completed == false">
+        <ion-item>
+          <ion-checkbox justify="space-between" (ionChange)="updateTaskStatus(task.taskId, task)">{{ task.title
+            }}</ion-checkbox>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteTask(task.taskId)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </div>
+    </ion-item-sliding>
+  </ion-list>
+  <br>
+  <h1 style="text-align: center;">Completed Tasks</h1>
+  <ion-list>
+    <ion-item-sliding *ngFor="let task of taskList">
+      <div *ngIf="task.completed == true">
+        <ion-item>
+          <ion-checkbox justify="space-between" (ionChange)="updateTaskStatus(task.taskId, task)"
+            [checked]="task.completed">{{ task.title }}</ion-checkbox>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteTask(task.taskId)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </div>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
